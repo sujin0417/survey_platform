@@ -1,0 +1,58 @@
+{% extends "base.html" %} 
+{% block contents %} 
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h2>Problem</h2>
+    </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12">
+    {{ problem.title }}
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12">
+    {{ problem.instruction }}
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12">
+    {{ problem.visualization }}
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12">
+    <form method="POST" action="/answer/create/">
+      {% csrf_token %} {% for field in form %}
+      <div class="form-group">
+          {% ifequal field.name 'answer' %}
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          <textarea
+          class="form-control"
+          id="{{ field.id_for_label }}"
+          placeholder="{{ field.label }}"
+          name="{{ field.name }}"
+          rows="5"
+          ></textarea>
+          {% else %}
+          <input
+          type="{{ field.field.widget.input_type }}"
+          class="form-control"
+          id="{{ field.id_for_label }}"
+          placeholder="{{ field.label }}"
+          name="{{ field.name }}"
+          value="{{problem.id}}"
+          />
+          {% endifequal %}
+      </div>
+      {% if form.errors %}
+      <span style="color: red">{{ form.errors }}</span>
+      {% endif %} 
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">다음</button>
+      </form>
+      <button type="submit" class="btn btn-primary" onclick="location.href='/end_survey/'">다음</button>
+  </div>
+</div>
+
+{% endblock %}
