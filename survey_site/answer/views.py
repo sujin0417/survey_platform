@@ -19,7 +19,7 @@ def start(request):
     assigned_id=str(assigned_id)
     request.session['assigned_id']=assigned_id
     problem_list()
-    return render(request, 'start.html')
+    return render(request, 'start.html',{'p_index':p_index})
     
 
 def end(request):
