@@ -18,8 +18,10 @@ def start(request):
     user.save()
     assigned_id=str(assigned_id)
     request.session['assigned_id']=assigned_id
-    problem_list()
-    return render(request, 'start.html',{'p_index':p_index})
+    p_index = problem_list()
+    p = p_index[0]
+    p_index = p_index[1:]
+    return render(request, 'start.html',{'p':p})
     
 
 def end(request):
@@ -35,7 +37,7 @@ def problem_list():
     problem_list=list(Problem.objects.all().values('id'))
     p_index = []
     for i in range(0, len(problem_list)):
-        p_index.append(problem_list[i]['id'])   
+        p_index.append(str(problem_list[i]['id']))   
     random.shuffle(p_index)
     return p_index
 
